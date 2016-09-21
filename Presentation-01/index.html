@@ -7,7 +7,7 @@
 		<title>reveal.js</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/beige.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -36,34 +36,26 @@
 
                     <section>
                         <h1>Git</h1>
-                        <hr>
                         <p>
                             <span>
                                 Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
                             </span>
-                            <hr>
-                            <span>https://git-scm.com/</span>
                         </p>
-                        <hr>
                     </section>
                     <section>
                         <h2>Installing Git</h2>
-                        <hr>
                         <h3>Windows</h3>
-                        <p>Got to https://git-scm.com/ and download installer</p>
+                        <p>Got to <a href="https://git-scm.com/">https://git-scm.com/</a> and download installer</p>
                         <hr>
                         <h3>Linux</h3>
                         <p>Install via your system package manager.</p>
-                        <p>Arch Linux: <code>$ sudo pacman -S git</code></p>
-                        <p>Ubuntu: <code>$ sudo apt-get install git</code></p>
-                        <hr>
+                        <p>Arch Linux: <code>$sudo pacman -S git</code></p>
+                        <p>Ubuntu: <code>$sudo apt-get install git</code></p>
                     </section>
                     <section>
                         <h2>Installing Git</h2>
-                        <hr>
                         <h3>Mac</h3>
                         <p>Enable developer tools. Go to terminal and type git. This should then open a prompt asking if you wish to install dev tools.</p>
-                        <hr>
                     </section>
                     <section>
                         <h2>Cloning a Git Repo</h2>
@@ -92,31 +84,123 @@
                     </section>
                     <section>
                         <h2>Github</h2>
-                        <hr>
-                        <p>
                         <p>A platform for hosting git repositories. Enables collaboration and is increadibly popular with open source projects.</p>
-                        <hr>
-                        <p>https://github.com/</p>
-                        <hr>
                     </section>
                     <section>
                         <h2>Create a Github account</h2>
-                    </section>
-                    <section>
-                        <h2>Forking a Repo</h2>
-                        <p>Navigate to https://github.com/jghibiki/SIG-Web-Project</p>
-                        <p>Click "Fork" button</p>
+                        <p><a href="https://github.com">https://github.com/</a></p>
                     </section>
                     <section>
                         <h2>What is a fork?</h2>
                         <p>A fork is a separate copy of the original repository, that is tied to your github account.</p>
                         <p>Changes made to a fork can still be propogated into the original (called the base fork) via a Github Pull Request.</p>
                     </section>
+                    <section>
+                        <h2>Forking a Repo</h2>
+                        <p>Navigate to <a href="https://github.com/jghibiki/SIG-Web-Project">https://github.com/jghibiki/SIG-Web-Project</a></p>
+                        <p>Click "Fork" button</p>
+                    </section>
+                    <section>
+                        <h2>Let's clone our forks</h2>
+                        <ol>
+                            <li>Navigate to your fork on Github.</li>
+                            <li>Click the clone or download button.</li>
+                            <li>Click the clipboard icon to copy the repository url.</li>
+                            <li>Go to a terminal <code>cd</code> to where you want to clone the repo and run <code>$git clone [ paste repo url here ]</code></li>
+                        </ol>
+                    </section>
                 </section>
                 <section>
                     <section>
-                        <h1>NodeJS</h1>
+                        <h1>Node JS</h1>
                     </section>
+                    <section>
+                        <h2>Node JS</h2>
+                        <p>Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, npm, is the largest ecosystem of open source libraries in the world.</p>
+                    </section>
+                    <section>
+                        <h2>Installing Node JS</h2>
+                        <hr>
+                        <h3>Windows/OSX</h3>
+                        <p>Go to <a href="https://nodejs.org/en/">https://nodejs.org/en/</a><p>
+                        <p>Download v6.6.0 or whatever is the "Current" version</p>
+                        <p>Run installer</p>
+                        <hr>
+                        <h3>Linux</h3>
+                        <p>Arch Linux: <code>$sudo pacman -S nodejs npm</code></p>
+                        <p>Ubuntu: Go to <a href="https://nodejs.org/en/download/package-manager/">https://nodejs.org/en/download/package-manager/</a> and follow guide</p>
+                    </section>
+                    <section>
+                        <h2>Node JS and NPM</h2>
+                        <p>The NodeJS installation installs the <code>node</code> terminal program as well as the <code>npm</code> terminal program.</p>
+                        <ul>
+                            <li><code>node</code>: Is the Javascript runtime environment.</li>
+                            <li><code>npm</code>: Is the <mark>N</mark>ode <mark>P</mark>ackage <mark>M</mark>anager. We will use this to install Javascript libraries.</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Node JS Programs</h2>
+                        <p>NodeJS is virtually identical to Javascript with the addition of several libraries and APIs that allow for filesystem manipulation and a few other similarly related libraries.</p>
+                        <hr>
+                        <p>Node programs follow the same syntax as classic Javascript.</p>
+                        <hr>
+                        <pre><code data-trim>
+                            $node -e 'console.log("Hello World");'
+                        </code></pre>
+                        <pre><code data-trim>
+                            Hello World
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h1>The DOM</h1>
+                    </section>
+                    <section>
+                        <h2>HTML & DOM</h2>
+                        <p>HTML: <mark>H</mark>yper<mark>T</mark>ext <mark>M</mark>arkup <mark>L</mark>anguage</p>
+                        <p>DOM: <mark>D</mark>ocument <mark>O</mark>bject <mark>M</mark>odel</p>
+                    </section>
+                    <section>
+                        <h2>HTML</h2>
+                        <p>As its name states HTML is a text based markup language. It is based on XML - E<mark>x</mark>tensible <mark>M</mark>arkup <mark>L</mark>anguage</p>
+                        <p>HTML is structured (like XML) via a set of tags</p>
+                        <pre><code >
+&lt;html&gt;
+    &lt;head&gt;
+         &lt;title&gt;App Title&lt;/title&gt;
+        &lt;script type=&quot;text/javascript&quot;&gt;console.log(&quot;hello&quot;)!&lt;/script&gt;
+        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;styles.css&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;My Application&lt;/h1&gt;
+        &lt;p&gt;A paragraph!&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+                        </code></pre>
+                    </section>
+					<section>
+						<h2>DOM</h2>
+						<p>HTML is compiled into a tree structure - a.k.a. the DOM</p>
+						<image src="images/dom-tree.png"/>
+					</section>
+					<section>
+						<h2>Rendered DOM</h2>
+						<p>The DOM is then used to render the view</p>
+						<image src="images/rendered-view.png"/>
+					</section>
+					<section>
+						<h2>Manipulating the DOM</h2>
+						<p>Javascript frameworks like jquery, AngularJS, and KnockoutJs. Work by allowing you to create complex applications by manipilating the DOM after it is built from the HTM "template".</p>
+						<hr>
+						<p>This modification may involve:</p>
+						<ul>
+							<li>Adding Nodes</li>
+							<li>Hiding Nodes</li>
+							<li>Removing Nodes</li>
+							<li>Styling Nodes</li>
+						</ul>
+					</section>
                 </section>
 			</div>
 		</div>
