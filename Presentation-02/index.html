@@ -1,0 +1,399 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/beige.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <h1>SIG-Web</h1> 
+                    <h2>Week 2</h2>
+                    <h3>Hitting the <strike>Ground</strike> Web Running</h3>
+                    <p>By: Jordan Goetze</p>
+                </section>
+                <section>
+                    <section>
+                        <h2>Pulling Changes from the Base Fork</h2>
+                    </section>
+                    <section>
+                        <h2>Git Remotes</h2>
+                        <div  class="fragment">
+                            <p>Open a terminal in your clone of the SIG-Web-Project.</p>
+                            <p>Run <pre><code>git remote -v</code></pre></p>
+                        </div>
+                        <div  class="fragment">
+                            <p>Result</p>
+                            <pre><code data-trim>
+origin  https://github.com/[YOUR USERNAME]/SIG-Web-Project.git (fetch)
+origin  https://github.com/[YOUR USERNAME]/SIG-Web-Project.git (push)
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Adding Git Remotes</h2>
+                        <div class="fragment">
+                            <p>Syntax</p>
+                            <pre><code>git remote add upstream [URL]</code></pre>
+                        </div>
+                        <p class="fragment">Our upstream URL <br><a target="_blank" href="https://github.com/jghibiki/SIG-Web-Project.git">https://github.com/jghibiki/SIG-Web-Project.git</a></p>
+                        <div class="fragment">
+                            <pre><code>git remote add upstream https://github.com/jghibiki/SIG-Web-Project.git</code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Adding Git Remotes</h2>
+                        <div class="fragment">
+                            <p>Run</p>
+                            <pre><code>git remote -v</code></pre>
+                        </div>
+                        <div class="fragment">
+                            <p>Result</p>
+                            <pre><code data-trim>
+origin  https://github.com/[YOUR USERNAME]/SIG-Web-Project.git (fetch)
+origin  https://github.com/[YOUR USERNAME]/SIG-Web-Project.git (push)
+upstream  https://github.com/jghibiki/SIG-Web-Project.git (push)
+upstream  https://github.com/jghibiki/SIG-Web-Project.git (fetch)
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Pulling Upstream Changes into Cache</h2>
+                        <pre><code>git fetch upstream</code></pre>
+                    </section>
+                    <section>
+                        <h2>Merging Upstream Into Your Master</h2>
+                        <div class="fragment">
+                            <pre><code>git checkout master</code></pre>
+                        </div>
+                        <div class="fragment">
+                            <pre><code>git merge upstream/master</code></pre>
+                        </div>
+                        <div class="fragment">
+                            <p>Now push changes to github:<p>
+                            <pre><code data-trim>git push origin master</code></pre>
+                        </div>
+                    </section>
+
+                </section>
+                <section>
+                    <section>
+                        <h2>Running the code we forked</h2>
+                        <p>Open two terminals in the repo</p>
+                    </section>
+                    <section>
+                        <h2>Terminal #1</h2>
+                        <p class="fragment">Change directory into the <code>server/</code> directory</p>
+                        <div class="fragment">
+                            <p>Run</p>
+                            <pre><code>npm install</code></pre>
+                        </div>
+                        
+                        <div class="fragment">
+                            <p>Run</p>
+                            <pre><code>node index.js</code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Terminal #2</h2>
+                        <p class="fragment">Change directory into the <code>client/</code> directory</p>
+                        <div class="fragment">
+                            <p>Run</p>
+                            <pre><code>npm install</code></pre>
+                        </div>
+                        <div class="fragment">
+                            <p>Run</p>
+                            <pre><code>npm start</code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Try it out</h2>
+                        <p>Navigate to <a target="_blank" href="http://localhost:3000">localhost:3000</a></p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Web Application Concepts</h2>
+                    </section>
+                    <section>
+                        <h2>REST APIs</h2>
+                        <ul>
+                            <li class="fragment">API: <mark>A</mark>pplication <mark>P</mark>rogrammer <mark>I</mark>nterface
+                                <ul>
+                                    <li>Generally defined as a way to access a service</li>
+                                </ul>
+                            </li>
+                            <li class="fragment">REST: <mark>RE</mark>presentational <mark>S</mark>tate <mark>T</mark>ransfer
+                                <ul>
+                                    <li class="fragment">Stateless Data Transfer</li>
+                                    <li class="fragment">Cacheable</li>
+                                    <li class="fragment">Uniform Interface</li>
+                                    <li class="fragment">Makes use of HTTP Verbs</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>HTTP Verbs</h2>
+                        <ul>
+                            <li class="fragment">GET 
+                                <ul>
+                                    <li class="fragment">Used for retrieving data from the server</li>
+                                    <li class="fragment">Default HTTP Verb used when loading a page in a web browser</li>
+                                </ul>
+                            </li>
+                            <li class="fragment">POST
+                                <ul>
+                                    <li class="fragment">Used for sending data to the server</li>
+                                    <li class="fragment">Default HTTP Verb used when submitting a HTML form</li>
+                                </ul>
+                            </li>
+                            <li class="fragment">PUT
+                                <ul>
+                                    <li class="fragment">Used for updating data on the server</li>
+                                </ul>
+                            </li>
+                            <li class="fragment">DELETE
+                                <ul>
+                                    <li class="fragment">Used for deleting data from the server</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>REST Requests</h2>
+                        <p>Demo</p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Typescript</h2>
+                        <p>Shamelessly ripped from <a href="https://learnxinyminutes.com/docs/typescript/">https://learnxinyminutes.com/docs/typescript/</a></p>
+                    </section>
+                    <section>
+                        <h2>Typescript: Types</h2>
+                        <pre><code data-trim>
+// There are 3 basic types in TypeScript
+var isDone: boolean = false;
+var lines: number = 42;
+var name: string = "Anders";
+                        </pre></code>
+
+                        <div class="fragment">
+                            <pre><code data-trim>
+// When it's impossible to know, there is the "Any" type
+var notSure: any = 4;
+notSure = "maybe a string instead";
+notSure = false; // okay, definitely a boolean
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Typescript: Collections</h2>
+                        <pre><code data-trim>
+// For collections, there are typed arrays and generic arrays
+var list: number[] = [1, 2, 3];
+// Alternatively, using the generic array type
+var list: Array<number> = [1, 2, 3];
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Typescript: Enumerations</h2>
+                        <pre><code data-trim>
+// For enumerations:
+enum Color {Red, Green, Blue};
+var c: Color = Color.Green;
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Void Functions</h2>
+                        <pre><code data-trim>
+// "void" is used in the special case of a function 
+//  returning nothing
+function bigHorribleAlert(): void {
+      alert("I'm a little annoying box!");
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Functions</h2>
+                        <pre><code data-trim>
+// The following are equivalent, the same signature will be infered by 
+// the compiler, and same JavaScript will be emitted
+
+var f1 = function(i: number): number { return i * i; }
+
+// Return type inferred
+var f2 = function(i: number) { return i * i; }
+var f3 = (i: number): number => { return i * i; }
+
+// Return type inferred
+var f4 = (i: number) => { return i * i; }
+
+// Return type inferred, one-liner means no return keyword needed
+var f5 = (i: number) =>  i * i;
+
+                        </code></pre>
+                        <div class="fragment">
+                            <p>Note</p>
+                            <pre><code data-trim>
+// Traditional Function Def
+function(i: number){ return i * i}
+
+// "Double Rocket Notation" 
+//  (use {} around code block to allow multiline)
+(i: number) => i * i;
+                            </code></pre>
+                        </div>
+                    </section>
+                    <section>
+                        <h2>Typescript: Interfaces</h2>
+                        <pre><code data-trim>
+// Interfaces are structural, anything that has the properties
+// is compliant with the interface
+interface Person {
+      name: string;
+        // Optional properties, marked with a "?"
+          age?: number;
+            // And of course functions
+              move(): void;
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Typescript: Implementing Interfaces</h2>
+                        <pre><code data-trim>
+// Object that implements the "Person" interface
+// Can be treated as a Person since it has the name and move properties
+var p: Person = { name: "Bobby", move: () => {} };
+// Objects that have the optional property:
+var validPerson: Person = { name: "Bobby", age: 42, move: () => {} };
+// Is not a person because age is not a number
+var invalidPerson: Person = { name: "Bobby", age: true };
+
+                        </code></pre>
+                    </section>
+                    <section>
+                        <h2>Typescript: Classes</h2>
+                        <pre><code data-trim>
+// Classes - members are public by default
+class Point {
+  // Properties
+  x: number;
+                        </code></pre>
+
+						<div class="fragment">
+							<p style="font-size: 0.5em">The public/private keywords will generate the appropriate JS code for the property</p>
+							<pre><code>
+
+  constructor(x: number, public y: number = 0) {
+    this.x = x;
+  }
+							</code></pre>
+						</div>
+
+					</section>
+					<section>
+                        <h2>Typescript: Classes Cont.</h2>
+                        <pre><code data-trim>
+
+  // Functions
+  dist() { return Math.sqrt(this.x * this.x + this.y * this.y); }
+
+  // Static members
+  static origin = new Point(0, 0);
+}
+                        </code></pre>
+
+						<div class="fragment">
+							<div style="font-size: 0.75em;">Creating instance of class</div>
+							<pre><code data-trim>
+var p1 = new Point(10 ,20);
+var p2 = new Point(25); //y will be 0
+							</code></pre>
+						</div>
+                    </section>
+					<section>
+						<h2>Typescript: Inheritance</h2>
+						<pre><code data-trim>
+// Inheritance
+class Point3D extends Point {
+  constructor(x: number, y: number, public z: number = 0) {
+    // Explicit call to the super class constructor is mandatory
+    super(x, y); 
+  }
+
+  // Overwrite
+  dist() {
+    var d = super.dist();
+    return Math.sqrt(d * d + this.z * this.z);
+  }
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>Typescript: Special Strings</h2>
+						<pre><code data-trim>
+// Template Strings (strings that use backticks)
+// String Interpolation with Template Strings
+var name = 'Tyrone';
+var greeting = `Hi ${name}, how are you?`
+
+// Multiline Strings with Template Strings
+var multiline = `This is an example
+of a multiline string`;
+						</code></pre>
+					</section>
+                </section>
+                <section>
+                    <h2>All presentations available at</h2>
+                    <p><a href="https://jghibiki.github.io/SIG-Web-Presentations/">https://jghibiki.github.io/SIG-Web-Presentations/</a></p>
+                </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				multiplex: {
+					// Example values. To generate your own, see the socket.io server instructions.
+					secret: null,  // null so the clients do not have control of the master presentation
+                    // secret: "14743998310186781560",
+					id: '8501323731eba22e', // id, obtained from socket.io server
+					url: 'https://reveal-js-multiplex-ccjbegmaii.now.sh' // Location of socket.io server
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
