@@ -1,0 +1,395 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/beige.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <h1>SIG-Web</h1> 
+                    <h2>Week 3</h2>
+                    <h3>NodeJS, and AngularJs, and Typescript, oh my!</h3>
+                    <p>By: Jordan Goetze</p>
+                </section>
+                <section>
+                    <section>
+                        <h2>The Chat App: Server</h2>
+                        <p class="fragment">Pretty Rediculously Simple</p>
+                    </section>
+					<section>
+						<h2>Architecture</h2>
+						<ul>
+							<li class="fragment">Simple REST Server</li>
+							<li class="fragment">Uses an array as a data store because we don't really need a database for this small of an app</li>
+							<li class="fragment">Sends and recieves JSON</li>
+							<li class="fragment">Should be able to:
+								<ul>
+									<li class="fragment">Give a list of messages when requested</li>
+									<li class="fragment">Add a message to the list of messages</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+                    <section>
+						<h2>Node Imports</h2>
+                        <pre><code data-trim>
+var express = require('express');
+var bodyParser = require('body-parser');
+var cors = require('cors');
+var app = express();
+
+						</code></pre>
+					</section>
+					<section>
+						<h2>Configuring the Express App</h2>
+						<pre><code data-trim>
+// enable Cross Origin Requests
+app.use(cors());
+
+// create data store
+var messages = [];
+
+ // parse application/x-www-form-urlencoded
+ app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+ app.use(bodyParser.json())
+
+						</code></pre>
+					</section>
+					<section>
+						<h2>Defining Routes</h2>
+						<pre><code data-trim>
+
+app.get('/message', function(req, res) {
+    console.log("GET  /message");
+    res.send(messages);
+});
+
+app.post('/message', function(req, res){
+    console.log("POST /message");
+    messages.push(req.body);
+    res.send(JSON.stringify({result: "success"}));
+})
+						</code></pre>
+					</section>
+					<section>
+						<h2>Starting the App</h2>
+						<pre><code data-trim>
+/* Start app */
+app.listen(8000, function(){
+    console.log("Application listening at 0.0.0.0:8000.");
+})
+                        </code></pre>
+                    </section>
+                </section>
+				<section>
+					<section>
+                        <h2>The Chat App: Client</h2>
+					</section>
+					<section>
+						<h2>Architecture</h2>
+						<ul>
+							<li class="fragment">Uses Angular 2 and TypeScript</li>
+							<li class="fragment">Consumes our REST API</li>
+							<li class="fragment">Needs to:
+								<ul>
+									<li class="fragment">Get Messages</li>
+									<li class="fragment">Display Messages</li>
+									<li class="fragment">Allow user to compose message</li>
+									<li class="fragment">Allow user to send message</li>
+									<li class="fragment">If there are no messages yet, let the user know nicely</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Angular 2 Module Hierarchy</h2>
+						<ul>
+							<li>app module (app.module.ts)
+								<ul>
+									<li>my-app component (app.component.ts)</li>
+									<li>messaging module (messaging.module.ts)
+										<ul>
+											<li>message class (message.ts)</li>
+											<li>messaging service (message.service.ts)</li>
+											<li>messaging component (messaging.component.ts)</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h2>index.html</h2>
+						<ul>
+							<li class="fragment">Loads CSS style sheets</li>
+							<li class="fragment">Loads some pollyfills for older browsers</li>
+							<li class="fragment">Loads SystemJS - the module loading system</li>
+							<li class="fragment">Import our app with SystemJS</li>
+							<li class="fragment">In the <code>&lt;body&gt;</code> we place our <code>&lt;my-app&gt;</code> directive.</li>
+						</ul>
+					</section>
+					<section>
+						<h2>app/app.module.ts</h2>
+						<pre><code data-trim>
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+
+import { AppComponent }  from './app.component';
+import { MessagingModule } from './messaging/messaging.module'; 
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    MessagingModule 
+  ],
+  declarations: [ AppComponent ],
+  bootstrap: [ AppComponent ]
+})
+export class AppModule { }
+						</code></pre>
+					</section>
+					<section>
+						<h2>app/app.component.ts</h2>
+						<pre><code data-trim>
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'my-app',
+    template: '&lt;messaging&gt;&lt;/messaging&gt;'
+})
+export class AppComponent { }
+						</code></pre>
+				</section>
+					<section>
+						<h2>app/messaging/messaging.module.ts</h2>	
+						<pre><code data-trim>
+import { NgModule }      from '@angular/core';
+import { HttpModule }    from '@angular/http';
+import { FormsModule }   from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { MdButtonModule } from '@angular2-material/button';
+import { MdCardModule } from '@angular2-material/card';
+import { MdInputModule } from '@angular2-material/input';
+import { MdListModule } from '@angular2-material/list';
+import { MdToolbarModule } from '@angular2-material/toolbar';
+
+import { MessagingComponent } from './messaging.component';
+
+@NgModule({
+  imports: [ 
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+
+    MdButtonModule.forRoot(),
+    MdCardModule.forRoot(),
+    MdInputModule.forRoot(),
+    MdListModule.forRoot(),
+    MdToolbarModule.forRoot(),
+  ],
+  declarations: [ MessagingComponent ],
+  exports: [ MessagingComponent ],
+  bootstrap: [ ]
+})
+export class MessagingModule { }
+
+						</code></pre>
+						<a target="_blank" href="https://github.com/jghibiki/SIG-Web-Project/blob/master/client/app/messaging/messaging.component.ts">View on Github</a>
+						<a target="_blank" href="https://material2-app.firebaseapp.com/">Angular Material 2</a>
+					</section>
+					<section>
+						<h2>app/messaging/message.ts</h2>
+						<pre><code data-trim>
+export class Message {
+    username: string;
+    message: string;
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>app/messaging/message.service.ts</h2>
+						<pre><code data-trim>
+import { Injectable } from '@angular/core';
+import { Headers, Http } from '@angular/http';
+
+import 'rxjs/add/operator/toPromise';
+
+import { Message} from './message';
+
+@Injectable()
+export class MessageService {
+
+    private apiUrl = "http://localhost:8000/message";
+    private headers = new Headers({'Content-Type': 'application/json'});
+
+    constructor(private http: Http) { }
+
+    getMessages(): Promise<Message[]> {
+        return this.http.get(this.apiUrl)
+                    .toPromise()
+                    .then(response => response.json() as Message[])
+                    .catch(this.handleError);
+    }
+
+    sendMessage(username: string, message: string): Promise<void> {
+        var payload = {
+            username: username,
+            message: message
+        }
+        return this.http.post(this.apiUrl, JSON.stringify(payload), {headers: this.headers})
+            .toPromise()
+            .then(() => null)
+            .catch(this.handleError);
+
+    }
+
+    private handleError(error: any): Promise<any> {
+        console.error('An error occurred', error); // for demo purposes only
+        return Promise.reject(error.message || error);
+    }
+}
+
+						</code></pre>
+						<a target="_blank" href="https://github.com/jghibiki/SIG-Web-Project/blob/master/client/app/messaging/message.service.ts">View on Github</a>
+					</section>
+					<section>
+						<h2>messaging.component.ts</h2>
+						<pre><code data-tim>
+import { Component, OnInit } from '@angular/core';
+import { FormsModule }   from '@angular/forms';
+
+import { Message } from './message';
+import { MessageService } from './message.service';
+
+@Component({
+    selector: 'messaging',
+    templateUrl: 'app/messaging/messaging.component.html',
+    providers: [MessageService]
+})
+export class MessagingComponent implements OnInit {
+
+    private user: string = "";
+    private message: string = "";
+
+    private messages: Message[] = [];
+
+    constructor(private messageService: MessageService) { }
+
+    getMessages(): void {
+        this.messageService.getMessages()
+            .then( messages => this.messages = messages);
+    }
+
+    sendMessage(): void {
+        this.messageService.sendMessage(this.user, this.message)
+            .then( () => {
+                this.message = "";
+                this.getMessages(); 
+            });
+    }
+
+    ngOnInit(): void {
+        this.getMessages();
+
+        setInterval(() => this.getMessages(), 5000);
+    }
+}
+						</code></pre>	
+						<a target="_blank" href="https://github.com/jghibiki/SIG-Web-Project/blob/master/client/app/messaging/messaging.component.ts">View on Github</h2>
+					</section>
+					<section>
+						<h2>messaging.component.html</h2>
+						<pre><code data-trim>
+&lt;md-toolbar&gt;
+    &lt;span&gt;SIG-Web Messaging Application&lt;/span&gt;
+&lt;/md-toolbar&gt;
+&lt;md-card&gt;
+    &lt;md-card-title&gt;Messages&lt;/md-card-title&gt;
+    &lt;md-card-content&gt;
+        &lt;md-list dense style=&quot;border: 1px solid rgba(0,0,0,0.12);&quot;&gt;
+            &lt;! -- default message if no messages --&gt;
+            &lt;md-list-item *ngIf=&quot;messages.length == 0&quot;&gt;Send a message to get chatting!&lt;/md-list-item&gt;
+
+            &lt;!-- Message --&gt;
+            &lt;span *ngIf=&quot;messages.length &gt; 0&quot;&gt;
+                &lt;md-list-item *ngFor=&quot;let message of messages&quot;&gt;
+                    &lt;h3 &gt;&lt;b&gt;{{message.username}}:&lt;/b&gt;&lt;/h3&gt;
+                    &lt;span style=&quot;color:#222&quot;&gt;&amp;nbsp;{{message.message}}&lt;/span&gt;
+                &lt;/md-list-item&gt;
+            &lt;/span&gt;
+        &lt;/md-list&gt;
+        &lt;hr&gt;
+        &lt;div (keyup.enter)=&quot;sendMessage()&quot;&gt;
+            &lt;md-input [(ngModel)]=&quot;user&quot;&gt;
+                &lt;md-placeholder&gt;Username&lt;/md-placeholder&gt;
+            &lt;/md-input&gt;
+
+            &lt;md-input [(ngModel)]=&quot;message&quot;&gt;
+                &lt;md-placeholder&gt;Message&lt;/md-placeholder&gt;
+            &lt;/md-input&gt;
+            &lt;button md-raised-button (click)=&quot;sendMessage()&quot;&gt;Send&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/md-card-content&gt;
+&lt;/md-card&gt;
+						</code></pre>
+						<a target="_blank" href="https://github.com/jghibiki/SIG-Web-Project/blob/master/client/app/messaging/messaging.component.html">View on Github</a>
+					</section>
+				</section>
+				<section>
+					<h2>Next time</h2>
+					<h3>A twitter stream client</h3>
+					<p>We will write tweet streaming server that will serve tweets to a web app dashboard.</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				multiplex: {
+					// Example values. To generate your own, see the socket.io server instructions.
+					secret: null,  // null so the clients do not have control of the master presentation
+                    // secret: "14743998310186781560",
+					id: '8501323731eba22e', // id, obtained from socket.io server
+					url: 'https://reveal-js-multiplex-ccjbegmaii.now.sh' // Location of socket.io server
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
